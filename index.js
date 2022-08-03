@@ -1,4 +1,5 @@
 const express = require('express');
+const { dbConnection } = require('./database/config');
 require('dotenv').config();
 
 
@@ -6,6 +7,8 @@ require('dotenv').config();
 // Build the server
 const app = express();
 
+// Database
+dbConnection();
 
 // Midelweare
 app.use( express.static('public') );
