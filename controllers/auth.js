@@ -79,11 +79,30 @@ const loginUser =  async (req, res = response) => {
 
 
 
-const renewToken = (req, res = response) => {
-    res.json({
-        ok: "Todo ok",
-        msg: 'renew'
-    })
+const renewToken = async (req, res = response) => {
+    
+    const { uid, name } = req;
+
+    try {
+        // generate JWT
+        const token = await genJWT( uid, name );
+        
+        return res.json({
+            ok: true,
+            msg: "JWT was revalidate",
+            uid,
+            name,
+            token
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            ok: false,
+            msg: "Field to revalidate token"
+        })     
+    }
+    
 }
 
 
