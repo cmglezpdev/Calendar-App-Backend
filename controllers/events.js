@@ -22,11 +22,14 @@ const createEvent = async ( req, res = response ) => {
     }
 }
 
-const getEvents = ( req, res = response ) => {
+const getEvents = async ( req, res = response ) => {
     
+    const events = await Event.find().populate('user', 'name')
+
     res.json({
         ok: true,
-        msg: "Get Events"
+        msg: "Get Events",
+        events
     })
 }
 
