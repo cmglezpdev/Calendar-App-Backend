@@ -22,7 +22,7 @@ const createUser = async (req, res = response) => {
         
         // Generate JWT
         const token = await genJWT( user.id, user.name );
-
+        
         return res.status(201).json({
             ok: true,
             msg: "User was created",

@@ -24,7 +24,8 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', require('./routes/auth')); 
-// TODO: crud events
+app.use('/api/events', require('./routes/events'));
+
 
 
 // Lisening 
