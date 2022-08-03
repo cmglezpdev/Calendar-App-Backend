@@ -9,17 +9,20 @@ const { validJWT } = require('../middlewares/jwt-validator');
 
 const router = Router();
 
+// Up the level the validJWT(aplly like general middleware because is apply to all routes)
+router.use(validJWT)
+
 // Get events
-router.get('/', validJWT, getEvents);
+router.get('/', getEvents);
 
 // Create Event
-router.post('/', validJWT, createEvent);
+router.post('/', createEvent);
 
 // Update Event
-router.put('/:id', validJWT, updateEvent);
+router.put('/:id', updateEvent);
 
 // Delete Event
-router.delete('/:id', validJWT, deleteEvent);
+router.delete('/:id', deleteEvent);
 
 
 
