@@ -1,5 +1,6 @@
 const express = require('express');
 const { dbConnection } = require('./database/config');
+const cors = require('cors');
 require('dotenv').config();
 
 
@@ -9,6 +10,10 @@ const app = express();
 
 // Database
 dbConnection();
+
+// Use Cords
+app.use( cors() );
+
 
 // Midelweare
 app.use( express.static('public') );
