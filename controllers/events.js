@@ -12,7 +12,7 @@ const createEvent = async ( req, res = response ) => {
 
         res.json({
             ok: true,
-            msg: "Create Event",
+            msg: "Event Created",
             event: eventDB
         })
 
@@ -28,7 +28,7 @@ const getEvents = async ( req, res = response ) => {
 
     res.json({
         ok: true,
-        msg: "Get Events",
+        msg: "Events Obtained",
         events
     })
 }
@@ -45,7 +45,7 @@ const updateEvent = async ( req, res = response ) => {
             return res.status(404).json({ok:false, msg:"The event no exist with that id"}); 
 
         if( event.user.toString() !== uid ) 
-        return res.status(401).json({ok:false, msg:"You don\'t have access to update this event"})
+            return res.status(401).json({ok:false, msg:"You don\'t have access to update this event"})
 
         const newEvent = {
             ...req.body,
@@ -55,6 +55,7 @@ const updateEvent = async ( req, res = response ) => {
 
         return res.json({
             ok: true,
+            msg: "Event Updated",
             event: updatedEvent
         })
 
@@ -65,12 +66,33 @@ const updateEvent = async ( req, res = response ) => {
 
 }
 
-const deleteEvent = ( req, res = response ) => {
+const deleteEvent = async ( req, res = response ) => {
 
-    res.json({
-        ok: true,
-        msg: "Delete Event"
-    })
+    const eventId = req.params.id;
+    const uid = req.uid;
+
+    try {
+        
+        const event = await Event.findById(eventId);
+        if( !event )
+            return res.status(404).json({ok:false, msg:"The event no exist with that id"});
+        
+        if( event.user.toString() !== uid )
+            return res.status(401).json({ok:false, msg:"You don\'t have access to delete this event"})
+    
+        await Event.findByIdAndRemove( eventId );
+    
+    
+        res.json({
+            ok: true,
+            msg: "Event Deleted"
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ok:false, msg:"Please, Talk with the admin"});
+    }
+
 }
 
 
