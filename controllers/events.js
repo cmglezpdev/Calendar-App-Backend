@@ -1,14 +1,25 @@
 const { response } = require('express');
+const Event = require('../models/Event');
 
+const createEvent = async ( req, res = response ) => {
 
-const createEvent = ( req, res = response ) => {
+    const event = new Event( req.body );
 
-    // verificar que tenga el evento
+    try {
+        
+        event.user = req.uid;
+        const eventDB = await event.save();
 
-    res.json({
-        ok: true,
-        msg: "Create Event"
-    })
+        res.json({
+            ok: true,
+            msg: "Create Event",
+            event: eventDB
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ok:false, msg:"Please, Talk with the admin"});
+    }
 }
 
 const getEvents = ( req, res = response ) => {
