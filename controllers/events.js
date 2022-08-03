@@ -1,18 +1,21 @@
 const { response } = require('express');
 
+
+const createEvent = ( req, res = response ) => {
+
+    // verificar que tenga el evento
+
+    res.json({
+        ok: true,
+        msg: "Create Event"
+    })
+}
+
 const getEvents = ( req, res = response ) => {
     
     res.json({
         ok: true,
         msg: "Get Events"
-    })
-}
-
-const createEvent = ( req, res = response ) => {
-
-    res.json({
-        ok: true,
-        msg: "Create Event"
     })
 }
 
